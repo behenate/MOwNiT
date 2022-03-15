@@ -2,4 +2,4 @@
 
 ### Lab 1
 
-<img src="Lab1/handout.png" alt="handout" style="zoom:50%;" />
+<img src="Lab1/handout.png" alt="handout" style="zoom:30%;" />
