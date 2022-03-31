@@ -1,4 +1,4 @@
-# Class that can generate interpolated function based on given points
+# Class that can generate interpolated function based on given points using Newtons method
 
 class Newton:
     def __init__(self, points: list = [], values: list = []):
@@ -18,13 +18,13 @@ class Newton:
         self.calculate_row(n)
 
     # Calculates given differential_quotient row
-    def calculate_row(self, row):
+    def calculate_row(self, row:int):
         for i in range(row):
             dq = self.__differential_quotient
             dq[row][i + 1] = (dq[row][i] - dq[row - 1][i]) / (self.__points[row] - self.__points[row - i - 1])
 
     # Performs Newtons interpolation based on information from differential_quotient array
-    def interpolate(self, x):
+    def interpolate(self, x:float):
         n = len(self.__points)
         dq = self.__differential_quotient
         interpolated = self.__values[0]

@@ -1,7 +1,6 @@
-# Using lagrange method gets interpolated value at given point, no need for class since it doesn't need to hold any
-# calculations between calls
+# Class for an interpolator which uses Lagrange's method
 class Lagrange:
-    def __init__(self, points, values):
+    def __init__(self, points: list, values: list):
         self.points = points
         self.values = values
 

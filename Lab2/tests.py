@@ -9,7 +9,7 @@ from lagrange import Lagrange
 
 
 # Tests the max deviation from the correct value
-def test_max_error(interpolator, xs, ys):
+def test_max_error(interpolator, xs:list, ys:list):
     max_error = 0
 
     for i in range(len(ys)):
@@ -19,14 +19,16 @@ def test_max_error(interpolator, xs, ys):
 
 
 # Tests the sum of squares od deviations from the correct value
-def test_mse(interpolator, xs, ys):
+def test_mse(interpolator, xs:list, ys:list):
     mse = 0
     for i in range(len(ys)):
         mse += (ys[i] - interpolator.interpolate(xs[i])) ** 2
     return mse
 
 
-def single_test_eq(f, range_start, range_end, train_samples_num, mode="equal", checkpoint=False, iteration=-1):
+# Performs a single test on a given value, function and point distance type
+def single_test_eq(f, range_start: float, range_end: float, train_samples_num: int, mode: str = "equal",
+                   checkpoint: bool = False, iteration: int = -1):
     ys, xs = samples_from_function(mode, f, train_samples_num, range_start, range_end)
     test_ys, test_xs = samples_from_function(mode, f, 1000, range_start, range_end)
 
@@ -45,9 +47,9 @@ def single_test_eq(f, range_start, range_end, train_samples_num, mode="equal", c
     if (checkpoint):
         draw_funct(f, range_start, range_end)
         plt.title("{}, iteration: {}".format(mode, iteration))
-        plt.scatter(xs, ys, marker="o", s=4)
-        draw(lagrange, range_start, range_end, "lagrange {}".format(mode), samples=1000)
+        plt.scatter(xs, ys, marker="o", s=20)
         draw(newton, range_start, range_end, "newton {}".format(mode), samples=1000)
+        draw(lagrange, range_start, range_end, "lagrange {}".format(mode), samples=1000)
 
         plt.legend(loc="upper right")
         plt.show()
@@ -55,8 +57,12 @@ def single_test_eq(f, range_start, range_end, train_samples_num, mode="equal", c
     return lagrange_max_error, lagrange_mse, newton_max_error, newton_mse
 
 
-def big_test(f, range_start, range_end, checkpoints=[], step=5, samples=100):
-    polynomial_samples = samples
+# Performs a set of tests on a given functions, it starts from a 2nd degree polynomial and ends at the passed
+# max degree polynomial. It tests a polynomial every step degrees, in all steps provided in the checkpoints array
+# will display a plot when the test is performed
+# The function also saves the results to text.xlsx file
+def big_test(f, range_start: float, range_end: float, checkpoints: list = [], step: int = 5, max_degree: int = 30):
+    polynomial_samples = max_degree
     results = np.empty(((polynomial_samples // step) * 2, 4))
     for i in range(2, polynomial_samples, step):
         l_me, l_mse, n_me, n_mse = single_test_eq(f, range_start, range_end, i, "equal", i in checkpoints, i)
@@ -67,4 +73,4 @@ def big_test(f, range_start, range_end, checkpoints=[], step=5, samples=100):
         results[i // step + polynomial_samples // step] = np.array([l_me, l_mse, n_me, n_mse])
 
     dataframe = pd.DataFrame(results)
-    dataframe.to_excel("test.xlsx", "equal")
+    dataframe.to_excel("test.xlsx", "tests")

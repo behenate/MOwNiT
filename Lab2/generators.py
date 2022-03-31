@@ -1,7 +1,7 @@
 # Generate points with equal intervals
 import math
 
-
+# Generates points at given,equal intervals
 def generate_intervals(n: int, a: float, b: float):
     xs = [0] * n
     dist = (b - a) / (n - 1)
@@ -26,3 +26,4 @@ def samples_from_function(dists: str, func, n: int, a: float, b: float):
         xs = generate_chebyshev_nodes(n, a, b)
     ys = [func(xs[i]) for i in range(n)]
     return ys, xs
+

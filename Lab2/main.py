@@ -1,5 +1,7 @@
 import math
 from tests import big_test
+import matplotlib.pyplot as plt
+from derivative import calculate_derivative
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -11,6 +13,23 @@ if __name__ == '__main__':
 
     # Create the function
     f = lambda x: -k * x * math.sin(m * (x - 1))
-    big_test(f, range_start, range_end, checkpoints=[2, 3, 5, 8, 13, 20, 30, 40, 65, 70, 100], step=5)
 
-    # Perform the tests
+    # Will run tests and display plots of the results at 3rd 5th 10th and 20th degree polynomial for both
+    # equal and chebyschev nodes
+    big_test(f, range_start, range_end, checkpoints=[3, 5, 10, 20], step=1, max_degree=21)
+
+    # Commented code, uncomment and modify to quickly test interpolations
+
+    # from generators import *
+    # from drawing import *
+    #
+    # f = lambda x: x ** 8 + 1
+    # # ys, xs = samples_from_function("equal", f, 5, range_start, range_end)
+    # test_ys, test_xs = samples_from_function("equal", f, 1000, -10, 10)
+    #
+    # interpolator = Lagrange([-1, 0, 1], [[2, -8, 56], [1, 0, 0], [2, 8, 56]])
+    #
+    # draw_funct(f, -10, 10)
+    # draw(interpolator, -10, 10, "Lagrange")
+    print(calculate_derivative(f, 4))
+    plt.show()

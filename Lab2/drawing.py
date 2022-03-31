@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 def draw(interpolator: Newton | Lagrange, a: float, b: float, label="", samples=1000):
     xs = generate_intervals(samples, a, b)
     results = [0] * samples
-
     for i in range(samples):
         results[i] = interpolator.interpolate(xs[i])
     plt.plot(xs, results, label=label)
