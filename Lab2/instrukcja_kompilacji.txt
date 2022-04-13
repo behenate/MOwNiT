@@ -1,0 +1,11 @@
+Aby skompilować program należy najpierw zainstalować wymagane biblioteki (zostały one wygenerowane przez polecenie
+pip freeze, można również, po prostu zamiast korzystać z komendy poniżej instalować brakujące biblioteki poleceniem
+pip install <biblioteka> kiedy przy uruchomieniu pojawi się błąd o braku biblioteki):
+
+pip install -r requirements.txt
+
+Następnie można uruchomić główny program zawierający przykładowe uruchomienie interpolacji:
+
+python3 main.py
+
+W komentarzach kodu znajdują się instrukcje jak używać zbudowanych przeze mnie klas i funkcji.
