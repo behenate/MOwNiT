@@ -1,9 +1,7 @@
 # Tests the max deviation from the correct value
 def test_max_error(interpolator, xs: list, ys: list):
     max_error = 0
-
     for i in range(len(ys)):
-        # print(abs(ys[i] - interpolator.interpolate(xs[i])))
         max_error = max(max_error, abs(ys[i] - interpolator.interpolate(xs[i])))
     return max_error
 

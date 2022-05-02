@@ -21,20 +21,19 @@ class PolynomialApproximation:
         for i in range(self.__m):
             for j in range(len(xs)):
                 self.__known[i] += w[j] * ys[j] * (xs[j] ** i)
-        print(self.__known)
+
     def __fill_unknown(self):
         sums = np.zeros((2 * self.__m))
-        print(self.__xs)
+        # print(self.__xs)
         for i in range(2 * self.__m):
             for j in range(len(self.__xs)):
                 sums[i] += self.__weights[j] * (self.__xs[j] ** i)
 
-        print(sums)
         m = self.__matrix
         for i in range(self.__m):
             for j in range(self.__m):
                 m[i][j] = sums[j + i]
-        print(m)
+        # print(m)
 
     # Should be called approximate, but I want it to be compatible with all the
     def interpolate(self, x):
@@ -42,7 +41,8 @@ class PolynomialApproximation:
         for i in range(self.__m):
             result += self.__coefficients[i] * x ** i
         return result
+
     def __solve(self):
         self.__coefficients = np.linalg.solve(self.__matrix, self.__known)
-        print(self.__coefficients)
+        # print(self.__coefficients)
 

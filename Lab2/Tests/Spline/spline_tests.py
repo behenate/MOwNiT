@@ -22,8 +22,8 @@ def single_test_quadratic(f, interpolator_class: Type[QuadraticSplineInterpolato
 
     max_error = test_max_error(interpolator, test_xs, test_ys)
     mse = test_mse(interpolator, test_xs, test_ys)
-
-    print(f"Quadratic intertpolation test nodes:{train_samples_num}")
+    print(max_error, mse)
+    # print(f"Quadratic intertpolation test nodes:{train_samples_num}")
 
     # Draw the interpolated function, show the legend and the graph
     if checkpoint:
@@ -57,12 +57,14 @@ def compare_spline_test(f, interpolator_class: Type[QuadraticSplineInterpolator]
                               train_samples_num=value, checkpoint=True)
 
 
-    for i in range(step, polynomial_samples, step):
+    for i in range(max(3,step), polynomial_samples, step):
+        print("Step: ", i)
         t_me, t_mse = single_test_quadratic(f, interpolator_class, boundary_condition, range_start, range_end,
                                             train_samples_num=i)
+        print(t_me, t_mse)
         results1[i // step] = np.array([i, t_me, t_mse])
 
-    for i in range(step, polynomial_samples, step):
+    for i in range(max(3,step), polynomial_samples, step):
         t_me, t_mse = single_test_quadratic(f, interpolator_class2, boundary_condition2, range_start, range_end,
                                             train_samples_num=i)
         results2[i // step] = np.array([i, t_me, t_mse])
