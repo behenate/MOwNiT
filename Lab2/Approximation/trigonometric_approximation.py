@@ -64,7 +64,3 @@ class TrigonometricApproximation:
             res += self.__a[j] * math.cos(j * x) + self.__b[j] * math.sin(j * x)
         return res
 
-
-# n>= 2m+1
-# Jak dodawanie węzłów wpływa na błąd
-# wyniki: wzdłóż: ile węzłów, w dół stopień

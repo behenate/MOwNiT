@@ -9,8 +9,8 @@ from Tests.errors import *
 from Approximation.trigonometric_approximation import TrigonometricApproximation
 
 
-def single_test(f, range_start: float, range_end: float, nodes: int, degree: int,
-                checkpoint: bool = False):
+def trig_single_test(f, range_start: float, range_end: float, nodes: int, degree: int,
+                     checkpoint: bool = False):
     ys, xs = samples_from_function("equal", f, nodes, range_start, range_end)
     test_ys, test_xs = samples_from_function("equal", f, 1000, range_start, range_end)
 
@@ -36,24 +36,24 @@ def single_test(f, range_start: float, range_end: float, nodes: int, degree: int
     return hermite_max_error, hermite_mse
 
 
-def approximation_tests(f, range_start: float, range_end: float, nodes_xlsx: list,
-                        nodes_display: list, degrees_display: list):
+def trig_approximation_tests(f, range_start: float, range_end: float, nodes_xlsx: list,
+                             nodes_display: list, degrees_display: list):
     for i, node_cnt in enumerate(nodes_display):
         for j, degree in enumerate(degrees_display):
             if degree <= node_cnt//2:
-                single_test(f, range_start, range_end, node_cnt, degree, checkpoint=True)
+                trig_single_test(f, range_start, range_end, node_cnt, degree, checkpoint=True)
     results = []
 
     for i, node_cnt in enumerate(nodes_xlsx):
-        degrees_xlsx = [6] #[2 + (i*node_cnt//5) for i in range(5)]
+        degrees_xlsx = [i for i in range(3, node_cnt//2 + 1)]
         for j, degree in enumerate(degrees_xlsx):
-            if degree < node_cnt:
-                h_me, h_mse = single_test(f, range_start, range_end, node_cnt, degree, False)
+            if degree <= node_cnt//2:
+                h_me, h_mse = trig_single_test(f, range_start, range_end, node_cnt, degree, False)
                 results.append([node_cnt, degree, h_me, h_mse])
 
     dataframe = pd.DataFrame(results)
     dataframe.columns = ["Ilość węzłów", "Stopień", "Błąd Maksymalny", "Błąd Kwadratowy"]
-    dataframe.to_excel("Results_Raports_Handouts/Approximation_Tests/tests.xlsx", "approximation test")
+    dataframe.to_excel("Results_Raports_Handouts/Approximation_Tests/trig_tests.xlsx", "approximation test")
 
 
 def generate_fancy_table(f, range_start: float, range_end: float, nodes: list):
@@ -67,10 +67,10 @@ def generate_fancy_table(f, range_start: float, range_end: float, nodes: list):
         fancy_table_row = [degree]
         for i, node_cnt in enumerate(nodes):
             if degree <= (node_cnt-1) //2:
-                h_me, h_mse = single_test(f, range_start, range_end, node_cnt, degree, False)
+                h_me, h_mse = trig_single_test(f, range_start, range_end, node_cnt, degree, False)
             else:
-                h_me = "~"
-            fancy_table_row.append(h_me)
+                h_mse = "~"
+            fancy_table_row.append(h_mse)
         fancy_table.append(fancy_table_row)
     for line in fancy_table:
         print(line)

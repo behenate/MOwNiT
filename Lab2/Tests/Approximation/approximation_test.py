@@ -40,16 +40,14 @@ def approximation_tests(f, range_start: float, range_end: float, nodes_xlsx: lis
                         nodes_display: list, degrees_display: list):
     for i, node_cnt in enumerate(nodes_display):
         for j, degree in enumerate(degrees_display):
-            if(degree < node_cnt):
-                print("Hello")
+            if degree <= node_cnt//2:
                 single_test(f, range_start, range_end, node_cnt, degree, checkpoint=True)
-    print(nodes_xlsx)
     results = []
 
     for i, node_cnt in enumerate(nodes_xlsx):
-        degrees_xlsx = [6] #[2 + (i*node_cnt//5) for i in range(5)]
+        degrees_xlsx = [i for i in range(3, node_cnt//2 + 1)] #[2 + (i*node_cnt//5) for i in range(5)]
         for j, degree in enumerate(degrees_xlsx):
-            if degree < node_cnt:
+            if degree <= node_cnt//2:
                 h_me, h_mse = single_test(f, range_start, range_end, node_cnt, degree, False)
                 results.append([node_cnt, degree, h_me, h_mse])
 
